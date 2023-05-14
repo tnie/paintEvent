@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QtDebug>
 #include <QPainter>
+#include <QLabel>
+#include <QGraphicsItem>
 
 static int times = 0;
 MainWindow::MainWindow(QWidget *parent)
@@ -9,6 +11,42 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    if(QLabel *labViewCord = new QLabel("labViewCord"))
+    {
+        labViewCord->setMinimumWidth(150);
+        ui->statusbar->addWidget(labViewCord);
+        if(QLabel *labSceneCord = new QLabel("labSceneCord"))
+        {
+            labSceneCord->setMinimumWidth(150);
+            ui->statusbar->addWidget(labSceneCord);
+            connect(ui->graphicsView, &QWGraphicsView::mouseMovePoint, this, [=](const QPoint& p1){
+                labViewCord->setText(QString::asprintf("View :%d, %d", p1.x(), p1.y()));
+                /**
+                 * 场景是空的，坐标转换也是可以的？@todo
+                 * 试验结果，此时场景坐标系以视图窗口中心点为远点，左上角(-w/2,-h/2)右下角(w/2,h/2)
+                 */
+//                assert(nullptr == ui->graphicsView->scene());
+                const QPointF pointScene = ui->graphicsView->mapToScene(p1);
+                labSceneCord->setText(QString("Scene :%1, %2").arg(pointScene.x()).arg(pointScene.y()));
+            });
+        }
+    }
+    if(QLabel *labItemCord = new QLabel("labItemCord"))
+    {
+        labItemCord->setMinimumWidth(150);
+        ui->statusbar->addWidget(labItemCord);
+        connect(ui->graphicsView, &QWGraphicsView::mouseClicked, this, [=](const QPoint& p1){
+            const QPointF pointScene = ui->graphicsView->mapToScene(p1);
+            if(QGraphicsScene *scene = ui->graphicsView->scene())
+            {
+                if(QGraphicsItem *item = scene->itemAt(pointScene, ui->graphicsView->transform()))
+                {
+                    const QPointF pointItem = item->mapFromScene(pointScene);
+                    labItemCord->setText(QString("Scene :%1, %2").arg(pointItem.x()).arg(pointItem.y()));
+                }
+            }
+        });
+    }
 }
 
 MainWindow::~MainWindow()
@@ -32,7 +70,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
     const int H = this->height();
     /**
      * 画笔实际上是对窗口（定义了逻辑坐标系）操作的，
-     * 但大多时候窗口对用户是透明的：因为默认视口区域等于设备区域，默认窗口区域也等于设备区域。
+     * 但大多时候窗口对用户是透明的：因为默认 视口区域等于设备区域，默认窗口区域也等于设备区域。
 */
     QPainter painter(this);
     const QRect rect(W/4, H/4, W/2, H/2);
