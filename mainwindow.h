@@ -23,5 +23,8 @@ private:
     // QWidget interface
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
+private slots:
+    void on_btnZoomIn_clicked();
+    void on_btnZoomOut_clicked();
 };
 #endif // MAINWINDOW_H

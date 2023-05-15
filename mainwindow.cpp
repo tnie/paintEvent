@@ -5,7 +5,11 @@
 #include <QLabel>
 #include <QGraphicsItem>
 
-static int times = 0;
+namespace  {
+    static int times = 0;
+    constexpr static double ZoomIn = 1.2;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -54,8 +58,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
 void MainWindow::paintEvent(QPaintEvent *event)
 {
     /**
@@ -85,3 +87,14 @@ void MainWindow::paintEvent(QPaintEvent *event)
 //    painter.scale(0.8, 0.8);
 //    painter.drawEllipse(rect);
 }
+
+void MainWindow::on_btnZoomIn_clicked()
+{
+    ui->graphicsView->scale(ZoomIn, ZoomIn);
+}
+
+void MainWindow::on_btnZoomOut_clicked()
+{
+    ui->graphicsView->scale(1/ZoomIn, 1/ZoomIn);
+}
+

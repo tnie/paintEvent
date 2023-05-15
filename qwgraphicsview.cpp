@@ -10,6 +10,10 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
     constexpr int longitude = 180*60;
     constexpr int latitude = 90*60;
     QRectF rect(-longitude, -latitude, longitude*2, latitude*2);
+    /**
+     * When observing a scene using an untransformed view,
+     * one unit on the scene is represented by one pixel on the screen.
+     */
     QGraphicsScene *scene = new QGraphicsScene(rect);
     /**
      * The view does not take ownership of scene.
@@ -21,9 +25,13 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
 //            度
             if((i%60 == 0) && (j %60 == 0))
             {
-                QGraphicsItem *item = scene->addEllipse(QRectF(-5, -5, 10, 10));
+                constexpr int R = 10;
+                QGraphicsItem *item = scene->addEllipse(QRectF(-R, -R, R*2, R*2));
                 QGraphicsItem *textItem = new QGraphicsTextItem(QString("%1,%2").arg(i/60).arg(j/60));
                 textItem->setParentItem(item);
+                const int w = textItem->boundingRect().width();
+                const int h = textItem->boundingRect().height();
+                textItem->setPos(-w/2, -h/2);
                 item->setPos(i, j);
             }
         }
