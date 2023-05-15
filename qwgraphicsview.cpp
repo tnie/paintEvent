@@ -8,6 +8,7 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
     : QGraphicsView{parent}
 {
     constexpr int longitude = 180*60;
+//    constexpr int longitude = 180*60*60;
     constexpr int latitude = 90*60;
     QRectF rect(-longitude, -latitude, longitude*2, latitude*2);
     /**
@@ -27,12 +28,13 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
             {
                 constexpr int R = 10;
                 QGraphicsItem *item = scene->addEllipse(QRectF(-R, -R, R*2, R*2));
-                QGraphicsItem *textItem = new QGraphicsTextItem(QString("%1,%2").arg(i/60).arg(j/60));
+                QGraphicsTextItem *textItem = new QGraphicsTextItem(QString("%1,%2").arg(i/60).arg(j/60));
                 textItem->setParentItem(item);
                 const int w = textItem->boundingRect().width();
                 const int h = textItem->boundingRect().height();
                 textItem->setPos(-w/2, -h/2);
                 item->setPos(i, j);
+//                qDebug() << textItem->toPlainText();
             }
         }
     }
