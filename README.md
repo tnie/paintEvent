@@ -43,3 +43,18 @@
 3. 图形项可以移动（随机移动或统一）
 4. 场景的背景可以按下移动（随机换图）
 5. 缩放
+
+# QGraphicsView
+
+图形项并非直接在 view 上绘制，view 作为可滑动窗口，包含 viewport 和两个滑动条。
+
+图形项实际是绘制在 viewport 组件上。
+
+键鼠事件是上层的 viewport 触发的，
+但在 view-scene 框架中将 viewport 键鼠事件的处理函数映射到了 view 的成员上。
+使得用户在大多时候对于 viewport 是无感知的，
+但会造成 `setMouseTracking()` 等修改组件属性时用错对象带来反直觉的现象。
+
+> For convenience, `QAbstractScrollArea` makes all viewport events available in the virtual `viewportEvent()` handler.
+>
+> QWidget's specialized handlers are remapped to viewport events in the cases where this makes sense.

@@ -7,6 +7,9 @@
 QWGraphicsView::QWGraphicsView(QWidget *parent)
     : QGraphicsView{parent}
 {
+    assert(!this->hasMouseTracking());
+    assert(!this->viewport()->hasMouseTracking());
+
     constexpr int longitude = 180*60;
 //    constexpr int longitude = 180*60*60;
     constexpr int latitude = 90*60;
@@ -29,6 +32,7 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
                 constexpr int R = 10;
                 QGraphicsItem *item = scene->addEllipse(QRectF(-R, -R, R*2, R*2));
                 QGraphicsTextItem *textItem = new QGraphicsTextItem(QString("%1,%2").arg(i/60).arg(j/60));
+//                Enable mouse tracking if the item accepts hover events or has a cursor set.
                 textItem->setParentItem(item);
                 const int w = textItem->boundingRect().width();
                 const int h = textItem->boundingRect().height();
@@ -38,9 +42,20 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
             }
         }
     }
+    qDebug() << "View hasMouseTracking" << this->hasMouseTracking();
+    qDebug() << "viewport hasMouseTracking" << this->viewport()->hasMouseTracking();
 }
 
 
+/**
+ * @brief QWGraphicsView::mouseMoveEvent
+ * @param event
+ * @todo without setMouseTracking(true) 也可以？为什么？
+ * @note 键鼠事件来自 viewport 而非 view
+ * For convenience, QAbstractScrollArea makes all viewport events available in the virtual viewportEvent() handler.
+ * 映射 view 的事件处理接口到 viewport 的键鼠事件！
+ * QWidget's specialized handlers are remapped to viewport events in the cases where this makes sense.
+ */
 
 void QWGraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
