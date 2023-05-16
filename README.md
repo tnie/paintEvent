@@ -55,6 +55,17 @@
 使得用户在大多时候对于 viewport 是无感知的，
 但会造成 `setMouseTracking()` 等修改组件属性时用错对象带来反直觉的现象。
 
+以下引用来自 QAbstractScrollArea Class
+
 > For convenience, `QAbstractScrollArea` makes all viewport events available in the virtual `viewportEvent()` handler.
 >
 > QWidget's specialized handlers are remapped to viewport events in the cases where this makes sense.
+
+以下引用来自 QGraphicsTextItem Class
+
+> QGraphicsTextItem accepts hover events by default. You can change this with setAcceptHoverEvents().
+
+以下引用来自 `void QGraphicsScene::addItem(QGraphicsItem *item)` 源码
+
+> Enable mouse tracking if the item accepts hover events or has a cursor set.
+

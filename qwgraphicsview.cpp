@@ -31,7 +31,7 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
             {
                 constexpr int R = 10;
                 QGraphicsItem *item = scene->addEllipse(QRectF(-R, -R, R*2, R*2));
-                QGraphicsTextItem *textItem = new QGraphicsTextItem(QString("%1,%2").arg(i/60).arg(j/60));
+                QGraphicsSimpleTextItem *textItem = new QGraphicsSimpleTextItem(QString("%1,%2").arg(i/60).arg(j/60));
 //                Enable mouse tracking if the item accepts hover events or has a cursor set.
                 textItem->setParentItem(item);
                 const int w = textItem->boundingRect().width();
@@ -43,6 +43,10 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
         }
     }
     qDebug() << "View hasMouseTracking" << this->hasMouseTracking();
+    /**
+     * @todo 为什么 viewport 的 mouseTracking 属性就变了呢？
+     * @note: QGraphicsTextItem accepts hover events by default.
+     */
     qDebug() << "viewport hasMouseTracking" << this->viewport()->hasMouseTracking();
 }
 
