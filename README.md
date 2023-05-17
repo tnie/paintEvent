@@ -43,6 +43,7 @@
 3. 图形项可以移动（随机移动或统一）
 4. 场景的背景可以按下移动（随机换图）
 5. 缩放
+6. 在 Windows 平台，以调试方式启动好慢
 
 # QGraphicsView
 
@@ -69,3 +70,11 @@
 
 > Enable mouse tracking if the item accepts hover events or has a cursor set.
 
+相关函数 `void QGraphicsItem::setAcceptHoverEvents(bool enabled)`
+
+# 鼠标移动
+
+在 `void QWidget::mouseMoveEvent(QMouseEvent *event)` 处理函数中 `assert(event->button() == Qt::NoButton);` 恒成立！
+以下引用来自 QMouseEvent Class
+
+> Note that the returned value is always `Qt::NoButton` for mouse move events.

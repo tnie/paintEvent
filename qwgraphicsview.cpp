@@ -64,6 +64,10 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
 void QWGraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
     const QPoint p1 = event->pos();
+    /**
+     * @note Note that the returned value is always Qt::NoButton for mouse move events.
+     */
+    assert(event->button() == Qt::NoButton);
     emit mouseMovePoint(p1);
     QGraphicsView::mouseMoveEvent(event);
 }
