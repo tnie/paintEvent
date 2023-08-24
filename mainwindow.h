@@ -1,4 +1,4 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -26,5 +26,7 @@ protected:
 private slots:
     void on_btnZoomIn_clicked();
     void on_btnZoomOut_clicked();
+    void on_actionp_triggered();
+    void on_actionl_triggered();
 };
 #endif // MAINWINDOW_H

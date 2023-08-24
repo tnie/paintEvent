@@ -11,10 +11,12 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    mousesubscriber.cpp \
     qwgraphicsview.cpp
 
 HEADERS += \
     mainwindow.h \
+    mousesubscriber.h \
     qwgraphicsview.h
 
 FORMS += \

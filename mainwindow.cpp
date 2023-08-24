@@ -1,9 +1,10 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QtDebug>
 #include <QPainter>
 #include <QLabel>
 #include <QGraphicsItem>
+#include "mousesubscriber.h"
 
 namespace  {
     static int times = 0;
@@ -47,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
                 if(QGraphicsItem *item = scene->itemAt(pointScene, ui->graphicsView->transform()))
                 {
                     const QPointF pointItem = item->mapFromScene(pointScene);
-                    labItemCord->setText(QString("Scene :%1, %2").arg(pointItem.x()).arg(pointItem.y()));
+                    labItemCord->setText(QString("Item :%1, %2").arg(pointItem.x()).arg(pointItem.y()));
                 }
             }
         });
@@ -97,5 +98,19 @@ void MainWindow::on_btnZoomIn_clicked()
 void MainWindow::on_btnZoomOut_clicked()
 {
     ui->graphicsView->scale(1/ZoomIn, 1/ZoomIn);
+}
+
+
+void MainWindow::on_actionp_triggered()
+{
+    static PointMaker pointSubscriber;
+    ui->graphicsView->setMouseSubscriber(&pointSubscriber);
+}
+
+
+void MainWindow::on_actionl_triggered()
+{
+    static LineMaker lineSubscriber;
+    ui->graphicsView->setMouseSubscriber(&lineSubscriber);
 }
 

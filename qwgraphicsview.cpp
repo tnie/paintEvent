@@ -1,8 +1,9 @@
-
+﻿
 #include "qwgraphicsview.h"
 #include <QMouseEvent>
 #include <QDebug>
 #include <QGraphicsItem>
+#include "mousesubscriber.h"
 
 QWGraphicsView::QWGraphicsView(QWidget *parent)
     : QGraphicsView{parent}
@@ -69,6 +70,10 @@ void QWGraphicsView::mouseMoveEvent(QMouseEvent *event)
      */
     assert(event->button() == Qt::NoButton);
     emit mouseMovePoint(p1);
+    if(mouseSubscriber_)
+    {
+        mouseSubscriber_->on_mouseMoveEvent(event, this);
+    }
     QGraphicsView::mouseMoveEvent(event);
 }
 
@@ -77,5 +82,21 @@ void QWGraphicsView::mousePressEvent(QMouseEvent *event)
 {
     const QPoint p1 = event->pos();
     emit mouseClicked(p1);
+    if(mouseSubscriber_)
+    {
+        mouseSubscriber_->on_mousePressEvent(event, this);
+    }
+
     QGraphicsView::mousePressEvent(event);
 }
+
+ViewMouseSubscriber *QWGraphicsView::mouseSubscriber() const
+{
+    return mouseSubscriber_;
+}
+
+void QWGraphicsView::setMouseSubscriber(ViewMouseSubscriber *newMouseSubscriber)
+{
+    mouseSubscriber_ = newMouseSubscriber;
+}
+

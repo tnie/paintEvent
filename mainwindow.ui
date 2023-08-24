@@ -67,11 +67,44 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="actionp"/>
+    <addaction name="actionl"/>
+    <addaction name="actiona"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionp">
+   <property name="text">
+    <string>画点</string>
+   </property>
+   <property name="toolTip">
+    <string>画点</string>
+   </property>
+  </action>
+  <action name="actionl">
+   <property name="text">
+    <string>画线</string>
+   </property>
+   <property name="toolTip">
+    <string>两点画线、画圈</string>
+   </property>
+  </action>
+  <action name="actiona">
+   <property name="text">
+    <string>画多边形</string>
+   </property>
+   <property name="toolTip">
+    <string>多点</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
