@@ -78,3 +78,8 @@
 以下引用来自 QMouseEvent Class
 
 > Note that the returned value is always `Qt::NoButton` for mouse move events.
+
+# 缩放
+
+海图软件的缩放本质上是切换底图，而非 Scene/View 中场景的缩放。
+场景的缩放会影响到其中的 Item 。
