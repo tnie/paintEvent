@@ -44,8 +44,10 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
         }
     }
     qDebug() << "View hasMouseTracking" << this->hasMouseTracking();
+    QGraphicsTextItem * textItem = scene->addText("setMouseTracking(true)");
+//    this->viewport()->setMouseTracking(true);
     /**
-     * @todo 为什么 viewport 的 mouseTracking 属性就变了呢？
+     * @note 为什么 viewport 的 mouseTracking 属性就变了呢？
      * @note: QGraphicsTextItem accepts hover events by default.
      */
     qDebug() << "viewport hasMouseTracking" << this->viewport()->hasMouseTracking();
@@ -55,7 +57,6 @@ QWGraphicsView::QWGraphicsView(QWidget *parent)
 /**
  * @brief QWGraphicsView::mouseMoveEvent
  * @param event
- * @todo without setMouseTracking(true) 也可以？为什么？
  * @note 键鼠事件来自 viewport 而非 view
  * For convenience, QAbstractScrollArea makes all viewport events available in the virtual viewportEvent() handler.
  * 映射 view 的事件处理接口到 viewport 的键鼠事件！
