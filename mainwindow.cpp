@@ -50,6 +50,10 @@ MainWindow::MainWindow(QWidget *parent)
                     const QPointF pointItem = item->mapFromScene(pointScene);
                     labItemCord->setText(QString("Item :%1, %2").arg(pointItem.x()).arg(pointItem.y()));
                 }
+                else
+                {
+                    labItemCord->clear();
+                }
             }
         });
     }
